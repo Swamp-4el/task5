@@ -1,0 +1,58 @@
+﻿@model List<string>
+@{
+    ViewData["Title"] = "Messanger";
+}
+
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <div class="form-group">
+            <input class="form-control" type="text" id="userName" placeholder="Enter user name" />
+        </div>
+        <div class="row form-group">
+            <div class="btn-group mx-auto col-md-12" role="group">
+                <input type="button" class="btn btn-success text-break" id="connect" value="Get Messages" />
+                <input type="button" class="btn btn-secondary text-break" id="disconnect" value="Change account"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5" disabled>
+                <div class="form-group">
+                    <label class="form-check-label">User</label>
+                    <input class="form-control" type="text" id="recipientUser" placeholder="Enter user" list="users"/>
+                    <label class="form-check-label text-danger" id="wrongName">Check the username</label>
+                    <datalist id="users">
+                        @for (var i = 0; i < Model.Count; ++i)
+                        {
+                            <option value="@Model[i]" class="other-user">@Model[i]</option>
+                        }
+                    </datalist>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label">Title</label>
+                    <input class="form-control" type="text" id="title" placeholder="Enter title" />
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label">Message</label>
+                    <textarea class="message" id="message" placeholder="Enter message"></textarea>
+                    <label class="form-check-label text-danger" id="emptyFields">the fields should not be empty!</label>
+                </div>
+                <div class="form-group">
+                    <input type="button" class="btn btn-primary btn-block" id="send" value="Send" />
+                </div>
+            </div>
+            <div class="col-7">
+                <div class="bg-dark mx-auto">
+                    <p class="p-2 text-light text-center">Messages</p>
+                </div>
+                <div class="messages" id="messages">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="js/communicationScript.js"></script>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
